@@ -1,7 +1,6 @@
 import streamlit as st
 
 st.set_page_config(page_title="Calculateur Extrusion", page_icon="📟")
-
 col_logo, col_titre = st.columns([1, 4])
 with col_logo:
     st.image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR02QcXPIab_-reEgYLJjWH7uBxAzSWrmgxISrF84jEJPDq77c0FNoLtv_EaF-hFLDiG3mMCbXQJZcPp6KA0ofBGlc&s&ec=121532766") 
