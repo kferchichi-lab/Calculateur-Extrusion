@@ -1,65 +1,80 @@
 import streamlit as st
 
-# Configuration de l'onglet du navigateur
-st.set_page_config(page_title="Calculateur Extrusion", page_icon="⚙️")
+st.set_page_config(page_title="Calculateur Extrusion", page_icon="📟")
 
-# Titre principal
-st.title("🏗️ Assistant de Calcul Extrusion")
-st.markdown("Ce calculateur permet de définir la longueur de culot et de lopin optimale.")
+col_logo, col_titre = st.columns([1, 4])
 
-# --- SECTION 1 : CALCUL DU CULOT ---
-st.header("1. Type de Billette")
-type_billette = st.selectbox(
-    "Quelle est la nature de la billette ?",
-    ["Primaire", "Recyclée"]
-)
+with col_logo:
+    st.image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6q1BtDSDgVnJZFo0hOBfQJoDS6OYiub-qfQ&s", width=120) 
 
-# Application de la règle k : 0.1 si primaire, 0.16 si recyclée
-k = 0.1 if type_billette == "Primaire" else 0.16
+with col_titre:
+    st.markdown("Tunisie Profilés d'Aluminium")
+    st.subheader("Département Maintenance et Travaux Neufs")
 
-# Calcul du culot (Fixé par votre formule : k * 228)
-long_culot_mm = k * 228
+st.markdown("---")
+st.title("📟 Calculateur d'Extrusion")
+st.markdown("Saisissez les paramètres pour obtenir les réglages machine.")
 
-# Affichage du résultat du culot
-st.success(f"📏 **Longueur de culot minimal : {long_culot_mm:.2f} mm**")
+# --- SECTION 1 : SAISIE DES DONNÉES ---
+st.header("📥 Paramètres d'entrée")
 
-st.divider() # Ligne de séparation
-
-# --- SECTION 2 : CALCUL DU LOPIN ---
-st.header("2. Paramètres de Production")
-
-# Organisation en deux colonnes pour une meilleure lisibilité
 col1, col2 = st.columns(2)
 
 with col1:
-    p_m = st.number_input("Poids au mètre (P/m) du profilé (kg/m)", min_value=0.0, format="%.3f")
-    n_ecoulements = st.number_input("Nombre d'écoulements", min_value=1, step=1)
+    type_billette = st.selectbox(
+        "Nature de la billette :",
+        ["Primaire", "Recyclée"]
+    )
+    p_m = st.number_input("P/m du profilé (kg/m)", min_value=0.0, format="%.3f")
 
 with col2:
-    long_demandee = st.number_input("Longueur écoulée demandée (m)", min_value=0.0, format="%.2f")
-    # Constante fixe
-    poids_lineique_billette = 110.180
+    n_ecoulements = st.number_input("Nombre d'écoulements", min_value=1, step=1)
+    long_demandee = st.number_input("Longueur demandée (m)", min_value=0.0, format="%.2f")
 
-# --- SECTION 3 : RÉSULTATS FINAUX ---
-st.markdown("### Résultat du calcul")
+st.divider()
 
-if st.button("CALCULER LE LOPIN OPTIMAL"):
+# --- SECTION 2 : CALCULS ET AFFICHAGE ---
+poids_lineique_billette = 110.180
+
+if st.button("🧮 CALCULER LE LOPIN OPTIMAL"):
     if p_m > 0 and long_demandee > 0:
-        # 1. Calcul du poids du lopin (en kg)
-        # On convertit long_culot_mm en mètres pour la formule
-        poids_lopin = ((p_m * n_ecoulements) * long_demandee) + (poids_lineique_billette * (long_culot_mm / 1000))
+        # A. CALCUL DU CULOT
+        k = 0.1 if type_billette == "Primaire" else 0.16
+        long_culot_mm = k * 228
         
-        # 2. Calcul de la longueur du lopin (conversion m en mm)
+        # B. CALCUL DU POIDS ET DE LA LONGUEUR DU LOPIN
+        poids_lopin = ((p_m * n_ecoulements) * long_demandee) + (poids_lineique_billette * (long_culot_mm / 1000))
         long_lopin_mm = (poids_lopin / poids_lineique_billette) * 1000
         
-        # Affichage des résultats
-        st.write("---")
-        st.metric(label="POIDS TOTAL DU LOPIN", value=f"{poids_lopin:.3f} kg")
-        st.metric(label="LONGUEUR LOPIN À RÉGLER", value=f"{long_lopin_mm:.2f} mm")
-        
-        st.info("💡 Note : Pensez à vérifier la température de la billette avant le filage.")
+        # C. VÉRIFICATION DE LA CONDITION (Limite 1100 mm)
+        if long_lopin_mm > 1100:
+            st.error("🚨 ALERTE SÉCURITÉ")
+            st.markdown(
+                f"""
+                <div style="background-color: #ff4b4b; padding: 20px; border-radius: 10px; border: 2px solid white;">
+                    <h2 style="color: white; margin: 0; text-align: center;">⚠️ LE LOPIN EST TROP LONG ({long_lopin_mm:.2f} mm)</h2>
+                    <p style="color: white; text-align: center; font-size: 1.2em; margin-top: 10px;">
+                        La limite est de 1100 mm. Merci de ressaisir les données.
+                    </p>
+                </div>
+                """, 
+                unsafe_allow_html=True
+            )
+        else:
+            # D. AFFICHAGE DES RÉSULTATS
+            st.markdown("### 📋 Consignes Opérateur")
+            st.info(f"📏 **VALEUR DU CULOT : {long_culot_mm:.2f} mm**")
+            
+            col_res1, col_res2 = st.columns(2)
+            with col_res1:
+                st.metric(label="POIDS DU LOPIN", value=f"{poids_lopin:.3f} kg")
+            with col_res2:
+                st.metric(label="LONGUEUR LOPIN OPTIMALE", value=f"{long_lopin_mm:.2f} mm")
+            
+            st.success("✅ Réglages validés.")
+            
     else:
-        st.warning("⚠️ Veuillez entrer les valeurs de P/m et de Longueur demandée.")
+        st.warning("⚠️ Information manquante : Vérifiez le P/m ou la Longueur.")
 
-# Bas de page
+st.caption(f"© 2026 TPR- Système d'Assistance Technique") 
 st.caption("Développé pour l'assistance opérateur en extrusion.")
