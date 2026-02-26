@@ -9,7 +9,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-col_logo, col_titre = st.columns([1, 5])
+col_logo, col_titre = st.columns([1, 4])
 
 with col_logo:
     st.image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6q1BtDSDgVnJZFo0hOBfQJoDS6OYiub-qfQ&s", width=120) 
