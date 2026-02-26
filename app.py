@@ -81,5 +81,3 @@ if st.button("🧮 CALCULER LE LOPIN OPTIMAL"):
 st.caption(f"© 2026 TPR- Système d'Assistance Technique") 
 st.caption("Développé pour l'assistance opérateur en extrusion.")
 
-
-changer sur ce script
