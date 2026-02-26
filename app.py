@@ -1,13 +1,6 @@
 import streamlit as st
 
-st.set_page_config(page_title="Calculateur Extrusion", page_icon="📟", layout="wide")
-
-st.markdown("""
-    <style>
-        .block-container {padding-top: 1rem; padding-bottom: 0rem;}
-        div.stButton > button {width: 100%; border-radius: 5px; height: 3em; background-color: #007bff; color: white;}
-    </style>
-    """, unsafe_allow_html=True)
+st.set_page_config(page_title="Calculateur Extrusion", page_icon="📟")
 
 col_logo, col_titre = st.columns([1, 4])
 
@@ -18,52 +11,72 @@ with col_titre:
     st.markdown("Tunisie Profilés d'Aluminium")
     st.subheader("Département Maintenance et Travaux Neufs")
 
+st.markdown("---")
+st.title("📟 Calculateur d'Extrusion")
+st.markdown("Saisissez les paramètres pour obtenir les réglages machine.")
 
-st.markdown("##### 📥 Paramètres d'entrée")
-c1, c2, c3, c4 = st.columns(4)
+# --- SECTION 1 : SAISIE DES DONNÉES ---
+st.header("📥 Paramètres d'entrée")
 
-with c1:
-    type_billette = st.selectbox("Billette", ["Primaire", "Recyclée"])
-with c2:
-    p_m = st.number_input("P/m (kg/m)", value=None, format="%.3f", placeholder="0.000")
-with c3:
-    n_ecoulements = st.number_input("Écoulements", min_value=1, step=1)
-with c4:
-    long_demandee = st.number_input("Long. (m)", value=None, format="%.2f", placeholder="0.00")
+col1, col2 = st.columns(2)
 
+with col1:
+    type_billette = st.selectbox(
+        "Nature de la billette :",
+        ["Primaire", "Recyclée"]
+    )
+    # Utilisation de value=None pour que la case soit vide au départ
+    p_m = st.number_input("P/m du profilé (kg/m)", value=None, format="%.3f", placeholder="Ex: 1.25")
 
-if st.button("🧮 CALCULER"):
-    if p_m is not None and long_demandee is not None:
-        
+with col2:
+    n_ecoulements = st.number_input("Nombre d'écoulements", min_value=1, step=1)
+    # Utilisation de value=None ici aussi
+    long_demandee = st.number_input("Longueur écoulée demandée (m)", value=None, format="%.2f", placeholder="Ex: 47")
+
+st.divider()
+
+# --- SECTION 2 : CALCULS ET AFFICHAGE ---
+poids_lineique_billette = 110.180
+
+if st.button("🧮 CALCULER LE LOPIN OPTIMAL"):
+    if p_m > 0 and long_demandee > 0:
+        # A. CALCUL DU CULOT
         k = 0.1 if type_billette == "Primaire" else 0.16
         long_culot_mm = k * 228
-        poids_lineique_billette = 110.180
+        
+        # B. CALCUL DU POIDS ET DE LA LONGUEUR DU LOPIN
         poids_lopin = ((p_m * n_ecoulements) * long_demandee) + (poids_lineique_billette * (long_culot_mm / 1000))
         long_lopin_mm = (poids_lopin / poids_lineique_billette) * 1000
         
-        
+        # C. VÉRIFICATION DE LA CONDITION (Limite 1100 mm)
         if long_lopin_mm > 1100:
-            st.markdown(f"""
-                <div style="background-color: #ff4b4b; padding: 15px; border-radius: 10px; text-align: center; color: white;">
-                    <h3 style="margin:0;">⚠️ TROP LONG : {long_lopin_mm:.2f} mm</h3>
-                    <p style="margin:0;">La limite est de 1100 mm.</p>
+            st.error("🚨 ALERTE SÉCURITÉ")
+            st.markdown(
+                f"""
+                <div style="background-color: #ff4b4b; padding: 20px; border-radius: 10px; border: 2px solid white;">
+                    <h2 style="color: white; margin: 0; text-align: center;">⚠️ LE LOPIN EST TROP LONG ({long_lopin_mm:.2f} mm)</h2>
+                    <p style="color: white; text-align: center; font-size: 1.2em; margin-top: 10px;">
+                        La limite est de 1100 mm. Merci de ressaisir les données.
+                    </p>
                 </div>
-            """, unsafe_allow_html=True)
+                """, 
+                unsafe_allow_html=True
+            )
         else:
-        
-            st.markdown("##### 📋 Résultats de réglage")
-            res1, res2, res3 = st.columns(3)
+            # D. AFFICHAGE DES RÉSULTATS
+            st.markdown("### 📋 Consignes Opérateur")
+            st.info(f"📏 **VALEUR DU CULOT : {long_culot_mm:.2f} mm**")
             
-            res1.metric("📏 CULOT (mm)", f"{long_culot_mm:.2f}")
-            res2.metric("⚖️ POIDS (kg)", f"{poids_lopin:.3f}")
-            res3.metric("🎯 LOPIN (mm)", f"{long_lopin_mm:.2f}")
+            col_res1, col_res2 = st.columns(2)
+            with col_res1:
+                st.metric(label="POIDS DU LOPIN", value=f"{poids_lopin:.3f} kg")
+            with col_res2:
+                st.metric(label="LONGUEUR LOPIN OPTIMALE", value=f"{long_lopin_mm:.2f} mm")
             
             st.success("✅ Réglages validés.")
+            
     else:
-        st.warning("⚠️ Information manquante : Remplissez toutes les cases.")
-
+        st.warning("⚠️ Information manquante : Vérifiez le P/m ou la Longueur.")
 
 st.caption(f"© 2026 TPR- Système d'Assistance Technique") 
 st.caption("Développé pour l'assistance opérateur en extrusion.")
-
-
