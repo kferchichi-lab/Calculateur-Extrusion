@@ -26,7 +26,7 @@ with col1:
 
 with col2:
   n_ecoulements = st.number_input("Nombre d'écoulements", min_value=1, step=1)
-  long_demandee = st.number_input("Longueur écoulée demandée (m)", value=None, format="%.2f", placeholder="Ex: 47")
+  long_demandee = st.number_input("Longueur écoulée demandée (m)", value=None, format="%.2f", placeholder="Ex: 47")
 st.divider()
 
 # --- SECTION 2 : CALCULS ET AFFICHAGE ---
