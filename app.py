@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.set_page_config(page_title="Calculateur Extrusion", page_icon="📟", layout="wide")
+st.set_page_config(page_title="Calculateur Extrusion", page_icon="📟")
 
 col_logo, col_titre = st.columns([1, 4])
 
