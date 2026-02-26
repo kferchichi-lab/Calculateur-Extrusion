@@ -89,7 +89,7 @@ if st.button("🧮 CALCULER LE LOPIN OPTIMAL"):
             with col_res2:
                 st.metric(label="LONGUEUR LOPIN OPTIMALE", value=f"{long_lopin_mm:.2f} mm")
 
-with col_visu:
+            with col_visu:
                 st.markdown("<br>", unsafe_allow_html=True)
                 # Barre Grise (Lopin actuel)
                 st.markdown(f'<div class="label-barre">Lopin actuel : {long_lopin_mm:.2f} mm</div>', unsafe_allow_html=True)
