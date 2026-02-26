@@ -22,14 +22,11 @@ with col1:
     "Nature de la billette :",
     ["Primaire", "Recyclée"]
   )
-    # Utilisation de value=None pour que la case soit vide au départ
-    p_m = st.number_input("P/m du profilé (kg/m)", value=None, format="%.3f", placeholder="Ex: 1.25")
+  p_m = st.number_input("P/m du profilé (kg/m)", value=None, format="%.3f", placeholder="Ex: 1.25")
 
 with col2:
-    n_ecoulements = st.number_input("Nombre d'écoulements", min_value=1, step=1)
-    # Utilisation de value=None ici aussi
-    long_demandee = st.number_input("Longueur écoulée demandée (m)", value=None, format="%.2f", placeholder="Ex: 47")
-
+  n_ecoulements = st.number_input("Nombre d'écoulements", min_value=1, step=1)
+  long_demandee = st.number_input("Longueur écoulée demandée (m)", value=None, format="%.2f", placeholder="Ex: 47")
 st.divider()
 
 # --- SECTION 2 : CALCULS ET AFFICHAGE ---
