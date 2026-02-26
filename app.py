@@ -9,7 +9,7 @@ with col_logo:
 
 with col_titre:
     st.markdown("Tunisie Profilés d'Aluminium")
-    st.subheader("Département Maintenance et Travaux Neufs")
+    st.subheader("Direction Maintenance et Travaux Neufs")
 
 st.markdown("---")
 st.title("📟 Calculateur d'Extrusion")
