@@ -18,7 +18,7 @@ with col_titre:
     st.markdown("Tunisie Profilés d'Aluminium")
     st.subheader("Département Maintenance et Travaux Neufs")
 
-# --- SECTION 1 : SAISIE (Sur une seule ligne pour gagner de la place) ---
+
 st.markdown("##### 📥 Paramètres d'entrée")
 c1, c2, c3, c4 = st.columns(4)
 
@@ -31,17 +31,17 @@ with c3:
 with c4:
     long_demandee = st.number_input("Long. (m)", value=None, format="%.2f", placeholder="0.00")
 
-# --- BOUTON DE CALCUL ---
+
 if st.button("🧮 CALCULER"):
     if p_m is not None and long_demandee is not None:
-        # CALCULS
+        
         k = 0.1 if type_billette == "Primaire" else 0.16
         long_culot_mm = k * 228
         poids_lineique_billette = 110.180
         poids_lopin = ((p_m * n_ecoulements) * long_demandee) + (poids_lineique_billette * (long_culot_mm / 1000))
         long_lopin_mm = (poids_lopin / poids_lineique_billette) * 1000
         
-        # VÉRIFICATION 1100 mm
+        
         if long_lopin_mm > 1100:
             st.markdown(f"""
                 <div style="background-color: #ff4b4b; padding: 15px; border-radius: 10px; text-align: center; color: white;">
@@ -50,7 +50,7 @@ if st.button("🧮 CALCULER"):
                 </div>
             """, unsafe_allow_html=True)
         else:
-            # AFFICHAGE COMPACT DES RÉSULTATS (Sur une seule ligne)
+        
             st.markdown("##### 📋 Résultats de réglage")
             res1, res2, res3 = st.columns(3)
             
@@ -66,6 +66,4 @@ if st.button("🧮 CALCULER"):
 st.caption(f"© 2026 TPR- Système d'Assistance Technique") 
 st.caption("Développé pour l'assistance opérateur en extrusion.")
 
-# --- PIED DE PAGE ---
 
-)
