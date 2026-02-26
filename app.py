@@ -18,10 +18,10 @@ st.header("📥 Paramètres d'entrée")
 col1, col2 = st.columns(2)
 
 with col1:
-    type_billette = st.selectbox(
-        "Nature de la billette :",
-        ["Primaire", "Recyclée"]
-    )
+  type_billette = st.selectbox(
+    "Nature de la billette :",
+    ["Primaire", "Recyclée"]
+  )
     # Utilisation de value=None pour que la case soit vide au départ
     p_m = st.number_input("P/m du profilé (kg/m)", value=None, format="%.3f", placeholder="Ex: 1.25")
 
