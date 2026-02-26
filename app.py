@@ -36,12 +36,8 @@ if st.button("🧮 CALCULER LE LOPIN OPTIMAL"):
   if p_m > 0 and long_demandee > 0:
     k = 0.1 if type_billette == "Primaire" else 0.16
     long_culot_mm = k * 228
-        
-        # B. CALCUL DU POIDS ET DE LA LONGUEUR DU LOPIN
    poids_lopin = ((p_m * n_ecoulements) * long_demandee) + (poids_lineique_billette * (long_culot_mm / 1000))
    long_lopin_mm = (poids_lopin / poids_lineique_billette) * 1000
-        
-        # C. VÉRIFICATION DE LA CONDITION (Limite 1100 mm)
    if long_lopin_mm > 1100:
      st.error("🚨 ALERTE SÉCURITÉ")
      st.markdown(
