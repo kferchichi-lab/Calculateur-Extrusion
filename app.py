@@ -33,19 +33,18 @@ st.divider()
 poids_lineique_billette = 110.180
 
 if st.button("🧮 CALCULER LE LOPIN OPTIMAL"):
-    if p_m > 0 and long_demandee > 0:
-        # A. CALCUL DU CULOT
-        k = 0.1 if type_billette == "Primaire" else 0.16
-        long_culot_mm = k * 228
+  if p_m > 0 and long_demandee > 0:
+    k = 0.1 if type_billette == "Primaire" else 0.16
+    long_culot_mm = k * 228
         
         # B. CALCUL DU POIDS ET DE LA LONGUEUR DU LOPIN
-        poids_lopin = ((p_m * n_ecoulements) * long_demandee) + (poids_lineique_billette * (long_culot_mm / 1000))
-        long_lopin_mm = (poids_lopin / poids_lineique_billette) * 1000
+   poids_lopin = ((p_m * n_ecoulements) * long_demandee) + (poids_lineique_billette * (long_culot_mm / 1000))
+   long_lopin_mm = (poids_lopin / poids_lineique_billette) * 1000
         
         # C. VÉRIFICATION DE LA CONDITION (Limite 1100 mm)
-        if long_lopin_mm > 1100:
-            st.error("🚨 ALERTE SÉCURITÉ")
-            st.markdown(
+   if long_lopin_mm > 1100:
+     st.error("🚨 ALERTE SÉCURITÉ")
+     st.markdown(
                 f"""
                 <div style="background-color: #ff4b4b; padding: 20px; border-radius: 10px; border: 2px solid white;">
                     <h2 style="color: white; margin: 0; text-align: center;">⚠️ LE LOPIN EST TROP LONG ({long_lopin_mm:.2f} mm)</h2>
@@ -56,10 +55,9 @@ if st.button("🧮 CALCULER LE LOPIN OPTIMAL"):
                 """, 
                 unsafe_allow_html=True
             )
-        else:
-            # D. AFFICHAGE DES RÉSULTATS
-            st.markdown("### 📋 Consignes Opérateur")
-            st.info(f"📏 **VALEUR DU CULOT : {long_culot_mm:.2f} mm**")
+        else:
+          st.markdown("### 📋 Consignes Opérateur")
+          st.info(f"📏 **VALEUR DU CULOT : {long_culot_mm:.2f} mm**")
             
             col_res1, col_res2 = st.columns(2)
             with col_res1:
