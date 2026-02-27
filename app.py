@@ -65,7 +65,7 @@ st.divider()
 # --- SECTION 2 : CALCULS DYNAMIQUES ---
 poids_lineique_billette = 110.180  # kg/m
 
-if st.button("🧮 CALCULER LE LOPIN OPTIMAL"):
+if st.button("🧮 CALCULER LES VALEURS OPTIMALES"):
     if p_m and long_demandee:
         
         # Récupération des paramètres de la presse choisie
