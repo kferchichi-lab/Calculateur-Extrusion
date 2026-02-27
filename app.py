@@ -12,18 +12,14 @@ CONFIG_PRESSES = {
 }
 
 # --- BARRE LATÉRALE (CHOIX DE LA PRESSE) ---
-col_config, col_main = st.columns([1, 3], gap="large")
-
-with col_config:
-    st.subheader("⚙️ Configuration")
-    st.markdown("---")
-    
-    # Choix de la presse (toujours visible)
+with st.sidebar:
+    st.header("⚙️ Configuration Machine")
+    # L'index=None permet d'avoir la petite croix "X" pour effacer
     presse_choisie = st.selectbox(
-        "SÉLECTIONNER LA PRESSE :",
+        "Sélectionnez la Presse :",
         options=list(CONFIG_PRESSES.keys()),
         index=None,
-        placeholder="Choisir..."
+        placeholder="Choisir une presse..."
     )
     
     if presse_choisie:
