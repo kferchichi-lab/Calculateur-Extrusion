@@ -1,7 +1,23 @@
 import streamlit as st
 
 # --- CONFIGURATION DE LA PAGE ---
-st.set_page_config(page_title="Calculateur Extrusion", page_icon="📟")
+st.set_page_config(page_title="Calculateur Extrusion", page_icon="📟", layout="wide")
+
+# --- BARRE LATÉRALE (CHOIX DE LA PRESSE) ---
+with st.sidebar:
+    st.header("⚙️ Configuration Machine")
+    # Le paramètre index=None permet d'avoir un champ vide au départ avec une petite croix "x"
+    presse_choisie = st.selectbox(
+        "Sélectionnez la Presse :",
+        ["Presse 4", "Presse 6", "Presse 7"],
+        index=None,
+        placeholder="Choisir une presse..."
+    )
+    
+    if presse_choisie:
+        st.success(f"Connecté à : **{presse_choisie}**")
+    else:
+        st.warning("Veuillez sélectionner une presse pour commencer.")
 
 # --- ENTÊTE ---
 col_logo, col_titre = st.columns([1, 4])
@@ -13,12 +29,21 @@ with col_logo:
     )
 
 with col_titre:
-    st.markdown("Tunisie Profilés d'Aluminium")
+    st.markdown("### Tunisie Profilés d'Aluminium")
     st.subheader("Direction Maintenance et Travaux Neufs")
 
 st.markdown("---")
-st.title("📟 Calculateur d'Extrusion")
-st.markdown("Saisissez les paramètres pour obtenir les réglages machine.")
+
+# Affichage du titre dynamique
+if presse_choisie:
+    st.title(f"📟 Calculateur d'Extrusion - {presse_choisie}")
+else:
+    st.title("📟 Calculateur d'Extrusion")
+
+# --- CONDITION : BLOQUER LE RESTE SI AUCUNE PRESSE N'EST CHOISIE ---
+if not presse_choisie:
+    st.info("👈 Veuillez sélectionner une presse dans la barre latérale pour activer le calculateur.")
+    st.stop() # Arrête l'exécution ici tant que la presse n'est pas choisie
 
 # --- SECTION 1 : SAISIE DES DONNÉES ---
 st.header("📥 Paramètres d'entrée")
@@ -57,7 +82,7 @@ poids_lineique_billette = 110.180  # kg/m
 
 if st.button("🧮 CALCULER LE LOPIN OPTIMAL"):
 
-    if p_m > 0 and long_demandee > 0:
+    if p_m and long_demandee: # Vérifie que les valeurs ne sont pas None
 
         k = 0.1 if type_billette == "Primaire" else 0.16
         long_culot_mm = k * 228
@@ -70,16 +95,15 @@ if st.button("🧮 CALCULER LE LOPIN OPTIMAL"):
         long_lopin_mm = (poids_lopin / poids_lineique_billette) * 1000
 
         if long_lopin_mm > 1100:
-
             st.error("🚨 ALERTE SÉCURITÉ")
             st.markdown(
                 f"""
-                <div style="background-color: #ff4b4b; padding: 20px;
+                <div style="background-color: #ff4b4b; padding: 20px; 
                             border-radius: 10px; border: 2px solid white;">
                     <h2 style="color: white; margin: 0; text-align: center;">
                         ⚠️ LE LOPIN EST TROP LONG ({long_lopin_mm:.2f} mm)
                     </h2>
-                    <p style="color: white; text-align: center;
+                    <p style="color: white; text-align: center; 
                               font-size: 1.2em; margin-top: 10px;">
                         La limite est de 1100 mm. Merci de ressaisir les données.
                     </p>
@@ -87,10 +111,8 @@ if st.button("🧮 CALCULER LE LOPIN OPTIMAL"):
                 """,
                 unsafe_allow_html=True
             )
-
         else:
-
-            st.markdown("### 📋 Consignes Opérateur")
+            st.markdown(f"### 📋 Consignes Opérateur - {presse_choisie}")
             st.info(f"📏 **VALEUR DU CULOT : {long_culot_mm:.2f} mm**")
 
             col_res1, col_res2 = st.columns(2)
@@ -107,11 +129,10 @@ if st.button("🧮 CALCULER LE LOPIN OPTIMAL"):
                     value=f"{long_lopin_mm:.2f} mm"
                 )
 
-            st.success("✅ Réglages validés.")
-
+            st.success(f"✅ Réglages validés pour la {presse_choisie}.")
     else:
         st.warning("⚠️ Information manquante : Vérifiez le P/m ou la Longueur.")
 
 # --- PIED DE PAGE ---
 st.caption("© 2026 TPR - Système d'Assistance Technique")
-st.caption("Développé pour l'assistance opérateur en extrusion.")
+st.caption(f"Développé pour l'assistance opérateur en extrusion.")
