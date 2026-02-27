@@ -3,6 +3,17 @@ import streamlit as st
 # --- CONFIGURATION DE LA PAGE ---
 st.set_page_config(page_title="Calculateur Extrusion", page_icon="📟")
 
+# CSS pour le style et les barres
+st.markdown("""
+    <style>
+        .block-container {padding-top: 1rem; padding-bottom: 0rem;}
+        .container-barre { width: 100%; background-color: #e0e0e0; border-radius: 5px; margin-bottom: 10px; position: relative; height: 25px;}
+        .barre-lopin { background-color: #808080; height: 100%; border-radius: 5px; transition: width 0.5s;}
+        .barre-limite { background-color: #006400; height: 8px; border-radius: 2px; margin-top: 5px;}
+        .label-barre { font-size: 0.8em; color: #555; margin-bottom: 2px;}
+    </style>
+    """, unsafe_allow_html=True)
+
 # --- ENTÊTE ---
 col_logo, col_titre = st.columns([1, 4])
 
@@ -54,7 +65,11 @@ st.divider()
 
 # --- SECTION 2 : CALCULS ET AFFICHAGE ---
 poids_lineique_billette = 110.180  # kg/m
+long_lopin_mm = (poids_lopin / poids_lineique_billette) * 1000
+        
 
+LIMITE_MAX = 1100.0
+pourcentage_lopin = min((long_lopin_mm / LIMITE_MAX) * 100, 100)
 if st.button("🧮 CALCULER LE LOPIN OPTIMAL"):
 
     if p_m > 0 and long_demandee > 0:
@@ -100,14 +115,26 @@ if st.button("🧮 CALCULER LE LOPIN OPTIMAL"):
                     label="POIDS DU LOPIN",
                     value=f"{poids_lopin:.3f} kg"
                 )
-
-            with col_res2:
                 st.metric(
                     label="LONGUEUR LOPIN OPTIMALE",
                     value=f"{long_lopin_mm:.2f} mm"
                 )
-
-            st.success("✅ Réglages validés.")
+            with col_res2:
+               with col_visu:
+                st.markdown("<br>", unsafe_allow_html=True)
+                # Barre Grise (Lopin actuel)
+                st.markdown(f'<div class="label-barre">Lopin actuel : {long_lopin_mm:.2f} mm</div>', unsafe_allow_html=True)
+                st.markdown(f'''
+                    <div class="container-barre">
+                        <div class="barre-lopin" style="width: {pourcentage_lopin}%;"></div>
+                    </div>
+                ''', unsafe_allow_html=True)
+                
+                # Barre Vert Sombre (Limite Cisaille)
+                st.markdown(f'<div class="label-barre">Capacité Tapis Cisaille (Limite : {LIMITE_MAX} mm)</div>', unsafe_allow_html=True)
+                st.markdown('<div class="barre-limite" style="width: 100%;"></div>', unsafe_allow_html=True)
+                
+                st.success("✅ Dimension conforme à la capacité machine.")
 
     else:
         st.warning("⚠️ Information manquante : Vérifiez le P/m ou la Longueur.")
