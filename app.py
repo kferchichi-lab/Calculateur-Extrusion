@@ -94,7 +94,7 @@ if st.button("🧮 CALCULER LE LOPIN OPTIMAL"):
                     </h2>
                     <p style="color: white; text-align: center; font-size: 1.2em; margin-top: 10px;">
                         La limite pour la <b>{presse_choisie}</b> est de <b>{limite_max} mm</b>.<br>
-                        Réduisez la longueur demandée ou le nombre d'écoulements.
+                         Merci de ressaisir les données.
                     </p>
                 </div>
                 """,
@@ -116,3 +116,4 @@ if st.button("🧮 CALCULER LE LOPIN OPTIMAL"):
 
 # --- PIED DE PAGE ---
 st.caption(f"© 2026 TPR - Système d'Assistance Technique | {presse_choisie}")
+st.caption("Développé pour l'assistance opérateur en extrusion.")
