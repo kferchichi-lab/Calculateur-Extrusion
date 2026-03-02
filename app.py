@@ -37,62 +37,44 @@ st.markdown("""
             height: auto;
             object-fit: contain !important;
         }
-        /* --- CARTES DE RÉSULTATS STYLE 'GLASS' --- */
-        .result-card {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            border: 1px solid rgba(0, 71, 171, 0.1);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-        .result-card:hover { transform: translateY(-5px); }
-
-        /* --- BOUTON CALCULER 'GLOW' --- */
+       /* Style des barres de visualisation */
+        .container-barre { width: 100%; background-color: #e0e0e0; border-radius: 5px; height: 20px; position: relative;}
+        .barre-lopin { background-color: #808080; height: 100%; border-radius: 5px; transition: width 0.5s;}
+        .barre-limite { background-color: #1a4332; height: 8px; border-radius: 5px; margin-top: 4px;}
+        
+       /* --- BOUTON CALCULER PREMIUM --- */
         div.stButton > button {
             width: 100%; 
-            height: 4em;
+            height: 3.8em;
             border-radius: 12px;
             border: none;
+            
+            /* Dégradé de bleu professionnel */
             background: linear-gradient(135deg, #0047AB 0%, #00264d 100%);
             color: white !important;
-            font-size: 1.1rem !important;
-            font-weight: 700 !important;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 8px 20px rgba(0, 71, 171, 0.4);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.5px;
+            
+            /* Ombre portée pour le relief */
+            box-shadow: 0 4px 15px rgba(0, 71, 171, 0.3);
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
         }
 
+        /* --- EFFET AU SURVOL (HOVER) --- */
         div.stButton > button:hover {
-            box-shadow: 0 12px 30px rgba(0, 71, 171, 0.6) !important;
-            transform: scale(1.02);
             background: linear-gradient(135deg, #0056d6 0%, #0047AB 100%) !important;
+            color: white !important;
+            box-shadow: 0 6px 20px rgba(0, 71, 171, 0.5) !important;
+            transform: translateY(-2px); /* Le bouton remonte légèrement */
+            border: none !important;
         }
 
-        /* --- BARRE DE CHARGE AVANCÉE --- */
-        .progress-wrapper {
-            background: #e2e8f0;
-            border-radius: 20px;
-            height: 28px;
-            width: 100%;
-            overflow: hidden;
-            margin-top: 10px;
-            border: 1px solid #cbd5e1;
-        }
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 10px;
-            color: white;
-            font-size: 0.8rem;
-            font-weight: bold;
-            transition: width 1s ease-in-out;
+        /* --- EFFET AU CLIC (ACTIVE) --- */
+        div.stButton > button:active {
+            transform: translateY(1px) scale(0.98);
+            box-shadow: 0 2px 10px rgba(0, 71, 171, 0.2) !important;
         }
     </style>
     """, unsafe_allow_html=True)
