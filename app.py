@@ -4,32 +4,38 @@ st.set_page_config(page_title="Calculateur Extrusion TPR", page_icon="📟", lay
 
 st.markdown("""
     <style>
-        /* On rend le header visible pour que la flèche soit cliquable */
+        /* On rend le header système visible pour la flèche mobile */
         header {
             visibility: visible !important;
             height: 60px !important;
         }
         
-        /* On décale tout le bloc de contenu vers le bas */
+        /* --- CONFIGURATION PC (Par défaut) --- */
         .block-container {
-            padding-top: 2.5rem !important; 
+            padding-top: 5rem !important; /* On augmente ici pour éviter le crop PC */
             padding-bottom: 2rem !important;
             padding-left: 5rem !important;
             padding-right: 5rem !important;
         }
 
-        /* Ajustements spécifiques pour Smartphone */
+        /* --- CONFIGURATION SMARTPHONE --- */
         @media (max-width: 768px) {
             .block-container {
-                padding-top: 3.5rem !important; /* Plus d'espace pour la flèche */
+                padding-top: 3.5rem !important; /* Un peu moins pour mobile pour garder votre 'très bon' rendu */
                 padding-left: 1.5rem !important;
                 padding-right: 1.5rem !important;
             }
             
-            /* On force un décalage vers le bas uniquement pour le logo sur mobile */
             [data-testid="stImage"] {
-                margin-top: 15px !important;
+                margin-top: 10px !important;
             }
+        }
+
+        /* Sécurité pour l'image (Logo) */
+        [data-testid="stImage"] img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain !important;
         }
         /* Style des barres de visualisation */
         .container-barre { width: 100%; background-color: #e0e0e0; border-radius: 5px; height: 20px; position: relative;}
