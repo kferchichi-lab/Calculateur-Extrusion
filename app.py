@@ -42,23 +42,39 @@ st.markdown("""
         .barre-lopin { background-color: #808080; height: 100%; border-radius: 5px; transition: width 0.5s;}
         .barre-limite { background-color: #1a4332; height: 8px; border-radius: 5px; margin-top: 4px;}
         
-        /* Style du bouton */
+       /* --- BOUTON CALCULER PREMIUM --- */
         div.stButton > button {
             width: 100%; 
-            font-weight: bold; 
-            background-color: #0047AB; /* Bleu TPR */
-            color: white !important; 
-            height: 3.5em; 
-            border-radius: 8px;
+            height: 3.8em;
+            border-radius: 12px;
             border: none;
-            transition: background-color 0.3s, transform 0.2s;
+            
+            /* Dégradé de bleu professionnel */
+            background: linear-gradient(135deg, #0047AB 0%, #00264d 100%);
+            color: white !important;
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.5px;
+            
+            /* Ombre portée pour le relief */
+            box-shadow: 0 4px 15px rgba(0, 71, 171, 0.3);
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
         }
 
-        /* --- EFFET AU SURVOL (MOUSE OVER) --- */
+        /* --- EFFET AU SURVOL (HOVER) --- */
         div.stButton > button:hover {
-            background-color: #003380 !important; /* Bleu plus foncé au survol */
-            color: white !important; /* On force l'écriture à rester blanche */
-            border: none;
+            background: linear-gradient(135deg, #0056d6 0%, #0047AB 100%) !important;
+            color: white !important;
+            box-shadow: 0 6px 20px rgba(0, 71, 171, 0.5) !important;
+            transform: translateY(-2px); /* Le bouton remonte légèrement */
+            border: none !important;
+        }
+
+        /* --- EFFET AU CLIC (ACTIVE) --- */
+        div.stButton > button:active {
+            transform: translateY(1px) scale(0.98);
+            box-shadow: 0 2px 10px rgba(0, 71, 171, 0.2) !important;
         }
     </style>
     """, unsafe_allow_html=True)
