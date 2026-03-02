@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.set_page_config(page_title="Calculateur Extrusion TPR", page_icon="📟", layout="wide", initial_sidebar_state="extended")
+st.set_page_config(page_title="Calculateur Extrusion TPR", page_icon="📟", layout="wide")
 
 st.markdown("""
     <style>
