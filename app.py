@@ -4,42 +4,33 @@ st.set_page_config(page_title="Calculateur Extrusion TPR", page_icon="📟", lay
 
 st.markdown("""
     <style>
-        /* Réactivation de la visibilité du bouton Sidebar */
-        [data-testid="stSidebarNav"] {padding-top: 2rem;}
-        
-        /* Ajustement du Header Streamlit pour laisser apparaître la flèche (>) */
+        /* On rend le header visible pour que la flèche soit cliquable */
         header {
             visibility: visible !important;
-            height: 50px !important;
-            background-color: transparent !important;
+            height: 60px !important;
         }
-
-        /* Marges pour éviter le 'Crop' sur PC et Mobile */
+        
+        /* On décale tout le bloc de contenu vers le bas */
         .block-container {
-            padding-top: 1rem !important; 
+            padding-top: 2.5rem !important; 
             padding-bottom: 2rem !important;
             padding-left: 5rem !important;
             padding-right: 5rem !important;
         }
 
-        /* Adaptabilité Smartphone */
+        /* Ajustements spécifiques pour Smartphone */
         @media (max-width: 768px) {
             .block-container {
+                padding-top: 3.5rem !important; /* Plus d'espace pour la flèche */
                 padding-left: 1.5rem !important;
                 padding-right: 1.5rem !important;
-                padding-top: 0.5rem !important;
             }
-            /* On s'assure que le titre ne touche pas les bords */
-            h2 { font-size: 1.4rem !important; }
+            
+            /* On force un décalage vers le bas uniquement pour le logo sur mobile */
+            [data-testid="stImage"] {
+                margin-top: 15px !important;
+            }
         }
-
-        /* Correction du logo */
-        [data-testid="stImage"] img {
-            max-width: 100%;
-            height: auto;
-            object-fit: contain !important;
-        }
-
         /* Style des barres de visualisation */
         .container-barre { width: 100%; background-color: #e0e0e0; border-radius: 5px; height: 20px; position: relative;}
         .barre-lopin { background-color: #808080; height: 100%; border-radius: 5px; transition: width 0.5s;}
