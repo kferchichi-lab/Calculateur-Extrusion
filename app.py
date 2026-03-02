@@ -1,34 +1,39 @@
 import streamlit as st
 
-st.set_page_config(page_title="Calculateur Extrusion TPR", page_icon="📟", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Calculateur Extrusion TPR", page_icon="📟", layout="wide"")
 
 st.markdown("""
     <style>
-        /* Masquage du header Streamlit */
-        header {visibility: hidden; height: 0px;}
-        [data-testid="stHeader"] {display: none;}
+        /* Réactivation de la visibilité du bouton Sidebar */
+        [data-testid="stSidebarNav"] {padding-top: 2rem;}
         
-        /* Configuration de base pour PC */
+        /* Ajustement du Header Streamlit pour laisser apparaître la flèche (>) */
+        header {
+            visibility: visible !important;
+            height: 50px !important;
+            background-color: transparent !important;
+        }
+
+        /* Marges pour éviter le 'Crop' sur PC et Mobile */
         .block-container {
-            padding-top: 2rem !important; 
-            padding-bottom: 1rem !important;
+            padding-top: 1rem !important; 
+            padding-bottom: 2rem !important;
             padding-left: 5rem !important;
             padding-right: 5rem !important;
         }
 
-        /* AJUSTEMENTS POUR SMARTPHONES (Écrans < 768px) */
+        /* Adaptabilité Smartphone */
         @media (max-width: 768px) {
             .block-container {
-                padding-left: 1rem !important;
-                padding-right: 1rem !important;
-                padding-top: 1rem !important;
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
+                padding-top: 0.5rem !important;
             }
-            h2 { font-size: 1.2rem !important; }
-            h4 { font-size: 0.9rem !important; }
-            .stMetric { margin-bottom: 10px !important; }
+            /* On s'assure que le titre ne touche pas les bords */
+            h2 { font-size: 1.4rem !important; }
         }
 
-        /* Fix pour le logo */
+        /* Correction du logo */
         [data-testid="stImage"] img {
             max-width: 100%;
             height: auto;
