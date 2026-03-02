@@ -43,7 +43,23 @@ st.markdown("""
         .barre-limite { background-color: #1a4332; height: 8px; border-radius: 5px; margin-top: 4px;}
         
         /* Style du bouton */
-        div.stButton > button {width: 100%; font-weight: bold; background-color: #0047AB; color: white; border: none; height: 3.5em; border-radius: 8px;}
+        div.stButton > button {
+            width: 100%; 
+            font-weight: bold; 
+            background-color: #0047AB; /* Bleu TPR */
+            color: white !important; 
+            height: 3.5em; 
+            border-radius: 8px;
+            border: none;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        /* --- EFFET AU SURVOL (MOUSE OVER) --- */
+        div.stButton > button:hover {
+            background-color: #003380 !important; /* Bleu plus foncé au survol */
+            color: white !important; /* On force l'écriture à rester blanche */
+            border: none;
+        }
     </style>
     """, unsafe_allow_html=True)
 CONFIG_PRESSES = {
